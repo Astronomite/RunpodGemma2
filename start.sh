@@ -3,6 +3,18 @@
 # Fail fast
 set -e
 
+# Create rclone config directory if needed
+mkdir -p /workspace/rclone_config
+
+# If config doesn't exist, prompt user to create or restore
+if [ ! -f /workspace/rclone_config/rclone.conf ]; then
+    echo "[WARN] No rclone config found at /workspace/rclone_config/rclone.conf"
+    echo "Run 'rclone config --config /workspace/rclone_config/rclone.conf' to set it up."
+fi
+
+# Point rclone to the persistent config
+export RCLONE_CONFIG=/workspace/rclone_config/rclone.conf
+
 # Define Ollama model storage directory
 export OLLAMA_MODELS=/workspace/ollama
 MODEL_NAME="gemma2"
